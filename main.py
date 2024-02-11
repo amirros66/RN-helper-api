@@ -40,8 +40,8 @@ def read_patients(skip: int = 0, limit: int = 20, db: Session = Depends(get_db))
     return results
 
 #Create Patient
-@app.post("/patients", response_model=schemas.Patient)
-def create_patient(patient: schemas.Patient, db: Session = Depends(get_db)):
+@app.post("/patients", response_model=schemas.PatientBase)
+def create_patient(patient: schemas.PatientBase, db: Session = Depends(get_db)):
     return patients.create_patient(db, patient=patient)
 
 #Delete Patient
