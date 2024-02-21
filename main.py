@@ -45,9 +45,15 @@ def create_patient(patient: schemas.PatientBase, db: Session = Depends(get_db)):
     return patients.create_patient(db, patient=patient)
 
 #Delete Patient
-@app.delete("/patients", response_model=schemas.Patient)
+@app.delete("/patient", response_model=schemas.Patient)
 def delete_patients(patient_id: int, db: Session = Depends(get_db)):
     return patients.delete_patient(db, patient_id=patient_id)
+
+#########Delete all patients
+@app.delete("/patients")
+def delete_all_patients_endpoint(db: Session = Depends(get_db)):
+    patients.delete_all_patients(db)
+    return {"message": "All patients have been deleted"}
 
 
 #Tasks
@@ -70,3 +76,8 @@ def create_patient_task(patient_id: int, task: schemas.TaskCreate, db: Session =
 def delete_patient_task(patient_id: int, task_id: int, db: Session = Depends(get_db)):
     return tasks.delete_task(db, patient_id=patient_id, task_id=task_id)
 
+#Delete all tasks
+@app.delete("/patients/tasks")
+def delete_all_tasks_endpoint(db: Session = Depends(get_db)):
+    tasks.delete_all_tasks(db)
+    return {"message": "All tasks have been deleted"}

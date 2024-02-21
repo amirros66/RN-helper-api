@@ -34,3 +34,8 @@ def get_patient_by_name(db: Session, name: str):
     patient = db.query(models.Patient).filter(models.Patient.name == name).first()
     print(patient)
     return patient
+
+########Delete all patients
+def delete_all_patients(db: Session):
+    db.query(models.Patient).delete()
+    db.commit()

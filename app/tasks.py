@@ -16,7 +16,7 @@ def create_task(db: Session, patient_id: int, task: schemas.Task):
     db.refresh(db_task)
     return db_task
 
-#delete tasks
+#delete task
 def delete_task(db: Session, patient_id: int, task_id: int):
     task = db.query(models.Task).filter(models.Patient.id == patient_id, models.Task.id == task_id).first()
     db.delete(task)
@@ -34,3 +34,8 @@ def get_task_by_title(db: Session, title: str):
     task = db.query(models.Task).filter(models.Task.title == title).first()
     print(task)
     return task
+
+#delete_all_tasks
+def delete_all_tasks(db: Session):
+    db.query(models.Task).delete()
+    db.commit()
