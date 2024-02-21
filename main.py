@@ -71,10 +71,17 @@ def create_patient_task(patient_id: int, task: schemas.TaskCreate, db: Session =
     return tasks.create_task(db, patient_id=patient_id, task=task)
 
 
-#Delete task
+#Delete one task by patient id
 @app.delete("/patient/{patient_id}/tasks", response_model=schemas.Task)
 def delete_patient_task(patient_id: int, task_id: int, db: Session = Depends(get_db)):
     return tasks.delete_task(db, patient_id=patient_id, task_id=task_id)
+
+#Delete all tasks by patient id
+@app.delete("/patient/{patient_id}/tasks/all")
+def delete_all_patient_tasks(patient_id: int, db: Session = Depends(get_db)):
+    tasks.delete_patient_tasks(db, patient_id=patient_id)
+    return {"message": f"All tasks for patient {patient_id} have been deleted"}
+
 
 #Delete all tasks
 @app.delete("/patients/tasks")

@@ -35,6 +35,13 @@ def get_task_by_title(db: Session, title: str):
     print(task)
     return task
 
+#Delete tasks by patient id
+def delete_patient_tasks(db: Session, patient_id: int):
+    tasks_to_delete = db.query(models.Task).filter(models.Task.patient_id == patient_id)
+    tasks_to_delete.delete(synchronize_session=False)
+    db.commit()
+
+
 #delete_all_tasks
 def delete_all_tasks(db: Session):
     db.query(models.Task).delete()
