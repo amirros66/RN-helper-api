@@ -46,3 +46,13 @@ def delete_patient_tasks(db: Session, patient_id: int):
 def delete_all_tasks(db: Session):
     db.query(models.Task).delete()
     db.commit()
+
+#Change task to completed
+def toggle_task_completion(db: Session, task_id: int):
+    task = db.query(models.Task).filter(models.Task.id == task_id).first()
+    if task:
+        task.completed = not task.completed
+        db.commit()
+        return task
+    else:
+        return None

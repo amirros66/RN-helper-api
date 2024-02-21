@@ -88,3 +88,11 @@ def delete_all_patient_tasks(patient_id: int, db: Session = Depends(get_db)):
 def delete_all_tasks_endpoint(db: Session = Depends(get_db)):
     tasks.delete_all_tasks(db)
     return {"message": "All tasks have been deleted"}
+
+
+@app.patch("/tasks/{task_id}/toggle")
+def toggle_task(task_id: int, db: Session = Depends(get_db)):
+    updated_task = tasks.toggle_task_completion(db, task_id=task_id)
+    if updated_task is None:
+        raise HTTPException(status_code=404, detail="Task not found")
+    return updated_task
